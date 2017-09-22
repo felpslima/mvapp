@@ -1,7 +1,24 @@
 angular
     .module("app.controllers")
-    .controller("historicController", ["$scope", "osService",
-        function($scope){
+    .controller("historicController", ["$scope", "osService", "$ionicModal",
+        function($scope, osService, $ionicModal){
+            
+            var _pushToArray = function(response){
+                if(response.length > 0){
+                    response.forEach(function(element) {
+                        var date = element.CreatedDate.split("T")[0].split("-").reverse().join("/");
+                        element.CreatedDate = date;
+                        $scope.orders.push(element);
+                    }, this);
+                }
+            }
+
+            var _error = function(err){
+                console.log(err);
+            }
+
+            osService.getOSs(_pushToArray, _error);
+
             $scope.orders = [
                 { 
                     OrderServiceId: 1,
@@ -32,5 +49,35 @@ angular
                     CreatedDate: "12/04/2017"
                 }
             ];
+
+            $scope.showOS = function(order){
+                $scope.os = order;
+            }
+
+            //Modal
+            $ionicModal.fromTemplateUrl('my-modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+              }).then(function(modal) {
+                $scope.modal = modal;
+              });
+              $scope.openModal = function() {
+                $scope.modal.show();
+              };
+              $scope.closeModal = function() {
+                $scope.modal.hide();
+              };
+              // Cleanup the modal when we're done with it!
+              $scope.$on('$destroy', function() {
+                $scope.modal.remove();
+              });
+              // Execute action on hide modal
+              $scope.$on('modal.hidden', function() {
+                // Execute action
+              });
+              // Execute action on remove modal
+              $scope.$on('modal.removed', function() {
+                // Execute action
+              });
         }
     ]);

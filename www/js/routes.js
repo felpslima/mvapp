@@ -43,16 +43,6 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('side-menu21.detalhes', {
-    url: '/detalhes',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/detalhes.html',
-        controller: 'detalhesCtrl'
-      }
-    }
-  })
-
 $urlRouterProvider.otherwise('/side-menu/historico')
 
 

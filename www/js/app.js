@@ -13,7 +13,7 @@ app.config(function($ionicConfigProvider, $sceDelegateProvider){
 
 })
 
-var _serviceBaseLocal = 'http://localhost:40000/',
+var _serviceBaseLocal = 'http://localhost:40000/api/',
     _serviceBase = 'http://portalapp20170725.azurewebsites.net/api/';
 
 var _apiUrlBase = _serviceBaseLocal;

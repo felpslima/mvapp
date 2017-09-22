@@ -1,10 +1,8 @@
 Ionic MVApp
 ===========
 
-Aplicativo desenvolvido para meu TCC.
+Aplicativo desenvolvido para meu TCC, criado para reportar problemas nas vias de uma cidade para a Sercretária de Obras.
 
 ## Using this project
 
-Aplicativo para registros de ordens de serviço para Sercretária de Obras de uma cidade.
-
-Desenvolvido em `ionic` e integrado com um API em C#.
+Desenvolvido em `ionic` e integrado com uma API em C#.
