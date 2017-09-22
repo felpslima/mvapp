@@ -1,0 +1,14 @@
+<ion-view title="Histórico" id="page1">
+  <ion-content padding="true" class="has-header">
+    <ion-list ng-repeat="order in orders" id="histRico-list2">
+      <ion-item class="item-icon-right positive" ui-sref="side-menu21.detalhes(order.OrderServiceId)">
+        <p>{{order.Address.Street}}</p>
+        <p>{{order.CreatedDate | date : "d.m.y"}}</p>
+        <p>{{order.Description}}</p>
+        <i class="icon ion-alert-circled"></i>
+      </ion-item>
+    </ion-list>
+    <div class="spacer" style="width: 300px; height: 11px;"></div>
+    <a ui-sref="side-menu21.ordemDeServiO()" id="histRico-button1" style="border-radius:100px 100px 100px 100px;" class="button button-positive icon ion-android-add"></a>
+  </ion-content>
+</ion-view>

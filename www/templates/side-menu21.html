@@ -1,0 +1,29 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="side-menu21"></ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu side="left" id="side-menu21">
+    <ion-header-bar class="bar-stable">
+      <div class="title"></div>
+    </ion-header-bar>
+    <ion-content padding="false" class="side-menu-left has-header ">
+      <ion-list id="side-menu21-list1">
+        <ion-item class="item-icon-right positive" id="side-menu21-list-item1" ui-sref="side-menu21.histRico()" menu-close="">Histórico
+          <i class="icon ion-android-calendar"></i>
+        </ion-item>
+        <ion-item class="item-icon-right positive" id="side-menu21-list-item2" ui-sref="side-menu21.ordemDeServiO()" menu-close="">Ordem de Serviço
+          <i class="icon ion-android-add-circle"></i>
+        </ion-item>
+        <ion-item class="item-icon-right positive" id="side-menu21-list-item21" ui-sref="side-menu21.sobre()" menu-close="">Sobre
+          <i class="icon ion-information-circled"></i>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
