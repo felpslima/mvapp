@@ -1,8 +1,8 @@
 angular
     .module("app.services")
     .factory("osService", ["$http", "ngApiSettings",
-        function(){
-            var apiBase = ngApiSettings.apiBase;
+        function($http, ngApiSettings){
+            var apiBase = ngApiSettings.apiUrlBase;
             var factory = {};
 
             var _createOS = function(os, success, error){

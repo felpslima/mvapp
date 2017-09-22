@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',]);
+var app = angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services']);
 
 app.config(function($ionicConfigProvider, $sceDelegateProvider){
 
@@ -13,16 +13,10 @@ app.config(function($ionicConfigProvider, $sceDelegateProvider){
 
 })
 
-var _apiUrlBase = "";
+var _serviceBaseLocal = 'http://localhost:40000/',
+    _serviceBase = 'http://portalapp20170725.azurewebsites.net/api/';
 
-switch (window.location.hostname) {
-  case 'localhost':
-      _serviceBase = 'http://localhost:40000/';
-      break;
-  case 'portalapp20170725.azurewebsites.net':
-      _serviceBase = 'http://portalapp20170725.azurewebsites.net/api/';
-      break;
-}
+var _apiUrlBase = _serviceBaseLocal;
 
 app.constant("ngApiSettings", {
   apiUrlBase: _apiUrlBase  
