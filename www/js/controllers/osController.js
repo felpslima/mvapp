@@ -35,7 +35,10 @@ angular
                             form.$setPristine(true);
                         },
                         function(error){
-                            _error(error);
+                            $ionicPopup.alert({
+                                title: 'Erro',
+                                template: 'Erro ao salvar, tente novamente mais tarde!'
+                            });
                         }
                     );
                 }
