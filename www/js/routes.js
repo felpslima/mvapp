@@ -11,7 +11,7 @@ angular.module('app.routes', [])
     url: '/historico',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/histRico.html',
+        templateUrl: 'templates/historico.html',
         controller: 'historicController'
       }
     }
@@ -21,7 +21,7 @@ angular.module('app.routes', [])
     url: '/ordemServico',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/ordemDeServiO.html',
+        templateUrl: 'templates/ordemDeServico.html',
         controller: 'osController'
       }
     }
@@ -44,6 +44,5 @@ angular.module('app.routes', [])
   })
 
 $urlRouterProvider.otherwise('/side-menu/historico')
-
 
 });

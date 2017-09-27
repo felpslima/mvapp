@@ -1,6 +1,6 @@
 angular
     .module("app.services")
-    .factory("osService", ["$http", "ngApiSettings",
+    .factory("osFactory", ["$http", "ngApiSettings",
         function($http, ngApiSettings){
             var apiBase = ngApiSettings.apiUrlBase;
             var factory = {};
@@ -47,10 +47,40 @@ angular
                     });
             }
 
+            var _updateOS = function(os, success, error){
+                $http({
+                    method: "PUT",
+                    url: apiBase + "orderservice/update",
+                    data: os
+                }).success(function(response){
+                    return success(response);
+                }).error(function(err){
+                    return error(err);
+                });
+            }
+
             factory.createOS = _createOS;
             factory.getOSs = _getOSs;
             factory.getById = _getById;
             factory.getOSTypes = _getOSTypes;
+            factory.updateOS = _updateOS;
 
             return factory;
-        }]);
+        }])
+    .service("osService",  
+        function(){
+            var orderService = {};
+            
+            var selectOS = function(os) {
+                orderService = os;
+            }
+
+            var getOS = function(){
+                return orderService;
+            }
+
+            return {
+                selectOS: selectOS,
+                getOS: getOS
+            };
+        });

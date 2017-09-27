@@ -1,0 +1,90 @@
+<ion-view title="Histórico" id="page1">
+  <ion-content padding="true" class="has-header">
+    <ion-list ng-repeat="order in orders" id="histRico-list2">
+      <ion-item class="item-icon-right positive" ng-click="viewModal.show(); showOS(order);">
+        <p>{{order.Address.Street}}</p>
+        <p>{{order.CreatedDate | date : "d.m.y"}}</p>
+        <p>{{order.Description}}</p>
+        <i class="icon ion-alert-circled"></i>
+      </ion-item>
+    </ion-list>
+    <div class="spacer" style="width: 300px; height: 11px;"></div>
+    <a ui-sref="side-menu21.ordemDeServiO()" id="histRico-button1" style="border-radius:100px 100px 100px 100px;" class="button button-positive icon ion-android-add"></a>
+  </ion-content>
+
+  <!-- View Modal -->
+  <script id="view-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title">Ordem de Serviço</h1>
+        <button  class="button button-positive" ng-click="viewModal.hide()">Voltar</button>
+      </ion-header-bar>
+      <ion-content padding="true" class="has-header">
+        <div class="list card" id="detalhes-card21">
+          <ion-item class="item-icon-right positive">
+              OS {{os.OrderServiceId}}
+              <p>{{os.Address.Street}}, {{os.Address.Number}}</p>
+              <p>{{os.CreatedDate | date : "d.m.y"}}</p>
+              <p>{{os.Description}}</p>
+            <i class="icon ion-alert-circled"></i>
+          </ion-item>
+          <div class="button-bar">
+            <button ng-click="editModal.show(); listOSTypes();" class="button button-positive button-block icon ion-edit"></a>
+            <button class="button button-positive button-block icon ion-ios-trash-outline"></button>
+          </div>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <!-- Edit Modal -->
+  <script id="edit-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar>
+        <h1 class="title">Editar Ordem de Serviço</h1>
+        <button  class="button button-positive" ng-click="editModal.hide()">Voltar</button>
+      </ion-header-bar>
+      <ion-content padding="true" class="has-header">
+        <form class="list" name="sendOSForm" ng-submit="enviar(sendOSForm)" novalidate>
+          <label class="item item-select" ng-class="{ 'has-errors' : sendOSForm.type.$invalid && sendOSForm.$submitted, 'no-errors' : sendOSForm.type.$valid && sendOSForm.$submitted}">
+            <span class="input-label">Tipo</span>
+            <select ng-model="os.TypeId" name="type" required>
+              <option ng-repeat="type in osTypes" value="{{type.OrderServiceTypeId}}">{{type.Name}}</option>
+            </select>
+            <div class="error-container" ng-show="sendOSForm.type.$error.required && sendOSForm.$submitted">
+              <span class="error"><i class="ion-information-circled"></i>Campo obrigatório!</span>  
+            </div>
+          </label>
+          <div class="spacer" style="width: 300px; height: 33px;"></div>
+          <label class="item item-input" ng-class="{ 'has-errors' : sendOSForm.endereco.$invalid && sendOSForm.$submitted, 'no-errors' : sendOSForm.endereco.$valid && sendOSForm.$submitted}">
+            <input type="text" ng-model="os.Address.Street" name="endereco" placeholder="Endereço" required>
+            <div class="error-container" ng-show="sendOSForm.endereco.$error.required && sendOSForm.$submitted">
+              <span class="error"><i class="ion-information-circled"></i>Campo obrigatório!</span>  
+            </div>
+          </label>
+          <label class="item item-input">
+            <input type="number" name="numero" ng-model="os.Address.Number" placeholder="Número" min="1" required ng-class="{ 'has-errors' : sendOSForm.endereco.$invalid && sendOSForm.$submitted, 'no-errors' : sendOSForm.endereco.$valid && sendOSForm.$submitted}">
+            <span class="error" ng-show="sendOSForm.numero.$error.required && sendOSForm.$submitted">
+              <i class="ion-information-circled"></i>Campo obrigatório!
+            </span>
+            <input type="text" name="complemento" ng-model="os.Address.Complement" placeholder="Complemento">
+          </label>
+          <label class="item item-input">
+            <input type="text" name="bairro" ng-model="os.Address.District" placeholder="Bairro">
+          </label>
+          <label class="item item-input">
+            <input type="text" name="cidade" ng-model="os.Address.City" placeholder="Cidade" disabled>
+          </label>
+          <label class="item item-input">
+            <input type="text" name="estado" ng-model="os.Address.State" placeholder="Estado" disabled>
+          </label>
+          <div class="spacer" style="width: 300px; height: 33px;"></div>
+          <label class="item item-input" style="height: 130px;">
+            <span class="input-label"></span>
+              <textarea ng-model="os.Description" name="descricao" placeholder="Descrição"></textarea>
+          </label>
+          <button type="submit" class="button button-positive button-block">Enviar</button>
+        </form>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+</ion-view>

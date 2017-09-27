@@ -1,6 +1,6 @@
-<ion-view title="Ordem de Serviço" id="page2">
+<ion-view title="Ordem de Serviço">
   <ion-content padding="true" class="has-header">
-    <form class="list" name="sendOSForm" ng-submit="Enviar(sendOSForm)" novalidate>
+    <form class="list" name="sendOSForm" ng-submit="enviar(sendOSForm)" novalidate>
       <label class="item item-select" ng-class="{ 'has-errors' : sendOSForm.type.$invalid && sendOSForm.$submitted, 'no-errors' : sendOSForm.type.$valid && sendOSForm.$submitted}">
         <span class="input-label">Tipo</span>
         <select ng-model="os.TypeId" name="type" required>

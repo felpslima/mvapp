@@ -1,7 +1,8 @@
 angular
     .module("app.controllers")
-    .controller("historicController", ["$scope", "osService", "$ionicModal",
-        function($scope, osService, $ionicModal){
+    .controller("historicController", ["$scope", "osFactory", "osService", "$ionicModal", "$location", "$ionicPopup",
+        function($scope, osFactory, osService, $ionicModal, $location, $ionicPopup){
+            $scope.orders = [];
             
             var _pushToArray = function(response){
                 if(response.length > 0){
@@ -17,67 +18,101 @@ angular
                 console.log(err);
             }
 
-            osService.getOSs(_pushToArray, _error);
+            //LIST
+            $scope.getOSs = function(){
+                osFactory.getOSs(_pushToArray, _error);
+            }
 
-            $scope.orders = [
-                { 
-                    OrderServiceId: 1,
-                    TypeId: 1,
-                    Description: "Buraco no asfalto próximo ao número 123",
-                    Address: {
-                        Street: "Rua A",
-                        Number: 123,
-                        Complement: null,
-                        District: "Centro",
-                        City: "Petrópolis",
-                        State: "RJ"
-                    },
-                    CreatedDate: "12/02/2017"
-                },
-                {
-                    OrderServiceId: 2,
-                    TypeId: 3,
-                    Description: "Paralelepípedos soltos pela rua próximo ao número 123",
-                    Address: {
-                        Street: "Rua B",
-                        Number: 321,
-                        Complement: "A",
-                        District: "Centro",
-                        City: "Petrópolis",
-                        State: "RJ"
-                    },
-                    CreatedDate: "12/04/2017"
-                }
-            ];
-
+            //DETAILS
             $scope.showOS = function(order){
                 $scope.os = order;
             }
 
-            //Modal
-            $ionicModal.fromTemplateUrl('my-modal.html', {
+            //EDIT
+            $scope.listOSTypes = function(){
+                osFactory.getOSTypes(
+                    function(osTypes){
+                        $scope.osTypes = osTypes;
+                    }, _error);
+            }
+
+            $scope.enviar = function(form){
+                if(form.$valid){
+                    osFactory.updateOS($scope.os,
+                        function(response){
+                            $ionicPopup.alert({
+                                title: 'Enviado',
+                                template: 'Ocorrência atualizada com sucesso!'
+                            }).then(function(){
+                                $scope.os = {};
+                                form.$setPristine(true);
+                                $location.path("side-menu/historico");
+                                $scope.closeEditModal();
+                                $scope.closeViewModal();
+                            });
+                        },
+                        function(error){
+                            $ionicPopup.alert({
+                                title: 'Erro',
+                                template: 'Erro ao salvar, tente novamente mais tarde!'
+                            });
+                        }
+                    );
+                }
+            }
+
+            //View Modal
+            $ionicModal.fromTemplateUrl('view-modal.html', {
                 scope: $scope,
                 animation: 'slide-in-up'
-              }).then(function(modal) {
-                $scope.modal = modal;
-              });
-              $scope.openModal = function() {
-                $scope.modal.show();
-              };
-              $scope.closeModal = function() {
-                $scope.modal.hide();
-              };
-              // Cleanup the modal when we're done with it!
-              $scope.$on('$destroy', function() {
-                $scope.modal.remove();
-              });
-              // Execute action on hide modal
-              $scope.$on('modal.hidden', function() {
+            }).then(function(modal) {
+                $scope.viewModal = modal;
+            });
+            $scope.openViewModal = function() {
+                $scope.viewModal.show();
+            };
+            $scope.closeViewModal = function() {
+                $scope.viewModal.hide();
+            };
+            // Cleanup the modal when we're done with it!
+            $scope.$on('$destroy', function() {
+                $scope.viewModal.remove();
+            });
+            // Execute action on hide modal
+            $scope.$on('modal.hidden', function() {
                 // Execute action
-              });
-              // Execute action on remove modal
-              $scope.$on('modal.removed', function() {
+            });
+                // Execute action on remove modal
+            $scope.$on('modal.removed', function() {
                 // Execute action
-              });
+            });
+
+            //Edit Modal
+            $ionicModal.fromTemplateUrl('edit-modal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.editModal = modal;
+            });
+            $scope.openEditModal = function() {
+                $scope.editModal.show();
+            };
+            $scope.closeEditModal = function() {
+                $scope.editModal.hide();
+            };
+            // Cleanup the modal when we're done with it!
+            $scope.$on('$destroy', function() {
+                $scope.editModal.remove();
+            });
+            // Execute action on hide modal
+            $scope.$on('modal.hidden', function() {
+                // Execute action
+            });
+            // Execute action on remove modal
+            $scope.$on('modal.removed', function() {
+                // Execute action
+            });
+
+            $scope.getOSs();
         }
     ]);

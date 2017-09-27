@@ -1,8 +1,9 @@
 angular
     .module("app.controllers")
-    .controller("osController", ["$scope", "osService", "$ionicPopup",
-        function($scope, osService, $ionicPopup){
+    .controller("osController", ["$scope", "osFactory", "osService", "$ionicPopup",
+        function($scope, osFactory, osService, $ionicPopup){
             $scope.os = {};
+            $scope.osTypes = [];    
 
             var _pushToArray = function(response){
                 if(response.length > 0){
@@ -16,16 +17,13 @@ angular
                 console.log(err);
             }
 
-            osService.getOSTypes(_pushToArray, _error);
+            $scope.loadOSTypes = function(){
+                osFactory.getOSTypes(_pushToArray, _error);
+            }
 
-            $scope.osTypes = [
-                { OrderServiceTypeId: 1, Name: "Buraco na rua fake" },
-                { OrderServiceTypeId: 2, Name: "Bueiro entupido fake" }
-            ];
-
-            $scope.Enviar = function(form){
+            $scope.enviar = function(form){
                 if(form.$valid){
-                    osService.createOS($scope.os,
+                    osFactory.createOS($scope.os,
                         function(response){
                             $ionicPopup.alert({
                                 title: 'Enviado',
@@ -43,4 +41,6 @@ angular
                     );
                 }
             }
+
+            $scope.loadOSTypes();
         }]);
