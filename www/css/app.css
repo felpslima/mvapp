@@ -33,3 +33,9 @@
 .no-errors {
   border-bottom: 3px solid green;
 }
+
+div > h4, .message-empty-history{
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}

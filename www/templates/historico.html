@@ -1,6 +1,10 @@
 <ion-view title="Histórico" id="page1">
   <ion-content padding="true" class="has-header">
-    <ion-list ng-repeat="order in orders" id="histRico-list2">
+    <ion-refresher pulling-text="Atualizar" on-refresh="getOSs()"></ion-refresher>
+    <div ng-show="orders.length == 0">
+      <h4 class="message-empty-history">Histórico vazio</h4>
+    </div>
+    <ion-list ng-show="orders.length > 0" ng-repeat="order in orders" id="histRico-list2">
       <ion-item class="item-icon-right positive" ng-click="viewModal.show(); showOS(order);">
         <p>{{order.Address.Street}}</p>
         <p>{{order.CreatedDate | date : "d.m.y"}}</p>
@@ -30,7 +34,7 @@
           </ion-item>
           <div class="button-bar">
             <button ng-click="editModal.show(); listOSTypes();" class="button button-positive button-block icon ion-edit"></a>
-            <button class="button button-positive button-block icon ion-ios-trash-outline"></button>
+            <button ng-click="showConfirm()" class="button button-positive button-block icon ion-ios-trash-outline"></button>
           </div>
         </div>
       </ion-content>

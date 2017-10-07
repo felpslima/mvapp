@@ -1,7 +1,7 @@
 angular
     .module("app.controllers")
-    .controller("historicController", ["$scope", "osFactory", "osService", "$ionicModal", "$location", "$ionicPopup",
-        function($scope, osFactory, osService, $ionicModal, $location, $ionicPopup){
+    .controller("historicController", ["$scope", "osFactory", "$ionicModal", "$location", "$ionicPopup",
+        function($scope, osFactory, $ionicModal, $location, $ionicPopup){
             $scope.orders = [];
             
             var _pushToArray = function(response){
@@ -12,6 +12,7 @@ angular
                         $scope.orders.push(element);
                     }, this);
                 }
+                $scope.$broadcast('scroll.refreshComplete');
             }
 
             var _error = function(err){
@@ -20,6 +21,7 @@ angular
 
             //LIST
             $scope.getOSs = function(){
+                $scope.orders = [];
                 osFactory.getOSs(_pushToArray, _error);
             }
 
@@ -36,13 +38,14 @@ angular
                     }, _error);
             }
 
+            //SAVE
             $scope.enviar = function(form){
                 if(form.$valid){
                     osFactory.updateOS($scope.os,
                         function(response){
                             $ionicPopup.alert({
                                 title: 'Enviado',
-                                template: 'Ocorrência atualizada com sucesso!'
+                                template: 'Ocorrência enviada com sucesso!'
                             }).then(function(){
                                 $scope.os = {};
                                 form.$setPristine(true);
@@ -54,12 +57,43 @@ angular
                         function(error){
                             $ionicPopup.alert({
                                 title: 'Erro',
-                                template: 'Erro ao salvar, tente novamente mais tarde!'
+                                template: 'Tente novamente mais tarde!'
                             });
                         }
                     );
                 }
             }
+
+            // Confirm dialog to delete
+            $scope.showConfirm = function() {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Excluir',
+                    template: 'Deseja excluir este registro?',
+                    buttons: [
+                        { 
+                            text: 'Cancelar',
+                            onTap: function(e) { return false; }
+                        },
+                        {
+                            text: '<b>Ok</b>',
+                            type: 'button-positive',
+                            onTap: function(e) { return true; }
+                        }
+                    ]
+                }).then(function(res) {
+                    if(res) {
+                        osFactory.deleteOS($scope.os.OrderServiceId,
+                            function(response){
+                                $scope.closeViewModal();
+                            },function(error){
+                                $ionicPopup.alert({
+                                    title: 'Erro',
+                                    template: 'Tente novamente mais tarde!'
+                                });
+                            });
+                    } 
+                });
+            };
 
             //View Modal
             $ionicModal.fromTemplateUrl('view-modal.html', {
@@ -81,6 +115,7 @@ angular
             // Execute action on hide modal
             $scope.$on('modal.hidden', function() {
                 // Execute action
+                $scope.getOSs();
             });
                 // Execute action on remove modal
             $scope.$on('modal.removed', function() {

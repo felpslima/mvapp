@@ -1,7 +1,7 @@
 angular
     .module("app.controllers")
-    .controller("osController", ["$scope", "osFactory", "osService", "$ionicPopup",
-        function($scope, osFactory, osService, $ionicPopup){
+    .controller("osController", ["$scope", "osFactory", "$ionicPopup",
+        function($scope, osFactory, $ionicPopup){
             $scope.os = {};
             $scope.osTypes = [];    
 

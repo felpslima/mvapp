@@ -59,28 +59,21 @@ angular
                 });
             }
 
+            var _deleteOS = function(osId, success, error){
+                $http.delete(apiBase + "orderservice/delete?id=" + osId)
+                    .success(function(response){
+                        return success(response);
+                    }).error(function(err){
+                        return error(err);
+                    });
+            }
+
             factory.createOS = _createOS;
             factory.getOSs = _getOSs;
             factory.getById = _getById;
             factory.getOSTypes = _getOSTypes;
             factory.updateOS = _updateOS;
+            factory.deleteOS = _deleteOS;
 
             return factory;
-        }])
-    .service("osService",  
-        function(){
-            var orderService = {};
-            
-            var selectOS = function(os) {
-                orderService = os;
-            }
-
-            var getOS = function(){
-                return orderService;
-            }
-
-            return {
-                selectOS: selectOS,
-                getOS: getOS
-            };
-        });
+        }]);
