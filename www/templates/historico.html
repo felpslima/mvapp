@@ -6,8 +6,8 @@
     </div>
     <ion-list ng-show="orders.length > 0" ng-repeat="order in orders" id="histRico-list2">
       <ion-item class="item-icon-right positive" ng-click="viewModal.show(); showOS(order);">
-        <p>{{order.Address.Street}}</p>
         <p>{{order.CreatedDate | date : "d.m.y"}}</p>
+        <p>{{order.Address.Street}}</p>
         <p>{{order.Description}}</p>
         <i class="icon ion-alert-circled"></i>
       </ion-item>
